@@ -1,13 +1,10 @@
-# 08.02_work_in_playbook
----
-
 
     name: Install Java
     hosts: all
     tasks:
         name: Set facts for Java 11 vars
         set_fact:
-        java_home: “/opt/jdk/{{ java_jdk_version }}”
+        java_home: “/opt/jdk/{{ java_jdk_version }}”  
         tags: java
         name: Upload .tar.gz file containing binaries from local storage
         copy:
