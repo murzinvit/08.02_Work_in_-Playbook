@@ -82,8 +82,8 @@
       become: true
       shell: cd /tmp/ && dpkg -i kibana-5.3.0-amd64.deb
       tags: kibana,skip_ansible_lint
-#    - name: Easy kibana config
-#      template:
-#         src: templates/kibana.yml.j2
-#         dest: /etc/kibana/kibana.yml
-#         mode: 0555
+    - name: Easiest config kibana
+      template:
+         src: templates/kibana.yml.j2
+         dest: /etc/kibana/kibana.yml
+         mode: 0555
