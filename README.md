@@ -15,11 +15,11 @@ name: Install Java<br/>
         until: download_java_binaries is succeeded #3 попытки записи в dest<br/>
         tags: java<br/>
         name: Ensure installation dir exists<br/>
-        become: true # выполнение таски с root правами <br/>
+        become: true # выполнение таски с root правами<br/>
         file: # создание папки с путём что емеется в java_home<br/>
-        state: directory<br/><br/>
+        state: directory<br/>
         path: “{{ java_home }}”<br/>
-        tags: java<br/><br/>
+        tags: java<br/>
         name: Extract java in the installation directory<br/>
         become: true<br/>
         unarchive: # разорхивация <br/>
@@ -49,3 +49,5 @@ name: Install Java<br/>
         register: get_elastic # переменная с результатом работы таски<br/>
         until: get_elastic is succeeded # 3 попытки загрузки<br/>
         tags: elastic # можно отдельно вызывать таску по этому тегу<br/>
+        name: Create directrory for Elasticsearch<br/>
+        file: # создание папки<br/>
