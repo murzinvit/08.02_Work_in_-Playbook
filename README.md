@@ -1,5 +1,4 @@
-
-   name: Install Java
+name: Install Java
 hosts: all # где исполнять playbook, для группы all
 tasks: # Что исполнять для группы all
 name: Set facts for Java 11 vars
@@ -11,17 +10,17 @@ copy: # копирование из src в dest
 src: “{{ java_oracle_jdk_package }}”
 dest: “/tmp/jdk-{{ java_jdk_version }}.tar.gz”
 register: download_java_binaries # запись результата таски в переменную
-until: download_java_binaries is succeeded
+until: download_java_binaries is succeeded #3 попытки записи в dest
 tags: java
 name: Ensure installation dir exists
-become: true # выполнение с root правами
-file:
+become: true # выполнение таски с root правами
+file: # создание папки с путём что емеется в java_home
 state: directory
 path: “{{ java_home }}”
 tags: java
 name: Extract java in the installation directory
 become: true
-unarchive:
+unarchive: # разорхивация
 copy: false
 src: “/tmp/jdk-{{ java_jdk_version }}.tar.gz”
 dest: “{{ java_home }}”
@@ -30,59 +29,23 @@ creates: “{{ java_home }}/bin/java”
 tags:java
 name: Export environment variables
 become: true
-template:
+template: # копирование из j2 файла в dest
 src: jdk.sh.j2
 dest: /etc/profile.d/jdk.sh
 tags: java
 name: Install Elasticsearch
-hosts: elasticsearch
+hosts: elasticsearch # выполнение для группы elasticsearch
 tasks:
 name: Upload tar.gz Elasticsearch from remote URL
-get_url:
+get_url: # загрузка по uRL
 url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz
 dest: /tmp/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz
-mode: 0755
-timeout: 60
+mode: 0755 # установка разрешений на скачанный файл
+timeout: 60 #время для загрузки
 force: true
-validate_certs: false
-register: get_elastic
-until: get_elastic is succeeded
-tags: elastic
+validate_certs: false # не проверять сертификат при скачевании
+register: get_elastic # переменная с результатом работы таски
+until: get_elastic is succeeded # 3 попытки загрузки
+tags: elastic # можно отдельно вызывать таску по этому тегу
 name: Create directrory for Elasticsearch
-file:
-state: directory
-path: “{{ elastic_home }}”
-tags: elastic
-name: Extract Elasticsearch in the installation directory
-become: true
-unarchive:
-copy: false
-src: “/tmp/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz”
-dest: “{{ elastic_home }}”
-extra_opts: [–strip-components=1]
-creates: “{{ elastic_home }}/bin/elasticsearch”
-tags:
-elastic
-name: Set environment Elastic
-become: true
-template:
-src: templates/elk.sh.j2
-dest: /etc/profile.d/elk.sh
-tags: elastic
-name: Download Kebana
-get_url:
-url: https://artifacts.elastic.co/downloads/kibana/kibana-5.3.0-amd64.deb
-dest: /tmp/kibana-5.3.0-amd64.deb
-mode: 0755
-timeout: 60
-force: true
-validate_certs: false
-name: Install Kibana
-become: true
-shell: cd /tmp/ && dpkg -i kibana-5.3.0-amd64.deb
-tags: kibana,skip_ansible_lint
-name: Easiest config kibana
-template:
-src: templates/kibana.yml.j2
-dest: /etc/kibana/kibana.yml
-mode: 0555
+file: # создание папки
