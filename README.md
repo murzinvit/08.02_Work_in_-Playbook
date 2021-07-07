@@ -1,29 +1,29 @@
 Прокоментировал строки в playbook с пояснениями что выполняет каждая строка. Readme.md открываю в IntellijIDEA.
 
-name: Install Java
-    hosts: all # где исполнять playbook, для группы all
-    tasks: # Что исполнять для группы all
-        name: Set facts for Java 11 vars
-        set_fact: # задаёт переменную доступную во всех тасках playbooka
-        java_home: “/opt/jdk/{{ java_jdk_version }}” # path + group_vars
-        tags: java # запуск таск в нужном порядке по тегу
-        name: Upload .tar.gz file containing binaries from local storage
-        copy: # копирование из src в dest
-        src: “{{ java_oracle_jdk_package }}”
-        dest: “/tmp/jdk-{{ java_jdk_version }}.tar.gz”
-        register: download_java_binaries # запись результата таски в переменную
-        until: download_java_binaries is succeeded #3 попытки записи в dest
-        tags: java
-        name: Ensure installation dir exists
+name: Install Java<br/>
+    hosts: all # где исполнять playbook, для группы all<br/>
+    tasks: # Что исполнять для группы all<br/>
+        name: Set facts for Java 11 vars<br/>
+        set_fact: # задаёт переменную доступную во всех тасках playbooka<br/>
+        java_home: “/opt/jdk/{{ java_jdk_version }}” # path + group_vars<br/>
+        tags: java # запуск таск в нужном порядке по тегу<br/>
+        name: Upload .tar.gz file containing binaries from local storage<br/>
+        copy: # копирование из src в dest<br/>
+        src: “{{ java_oracle_jdk_package }}”<br/>
+        dest: “/tmp/jdk-{{ java_jdk_version }}.tar.gz”<br/>
+        register: download_java_binaries # запись результата таски в переменную<br/>
+        until: download_java_binaries is succeeded #3 попытки записи в dest<br/>
+        tags: java<br/>
+        name: Ensure installation dir exists<br/>
         become: true # выполнение таски с root правами <br/>
         file: # создание папки с путём что емеется в java_home<br/>
-        state: directory<br/>
+        state: directory<br/><br/>
         path: “{{ java_home }}”<br/>
-        tags: java<br/>
+        tags: java<br/><br/>
         name: Extract java in the installation directory<br/>
         become: true<br/>
         unarchive: # разорхивация <br/>
-        copy: false
+        copy: false<br/>
         src: “/tmp/jdk-{{ java_jdk_version }}.tar.gz”<br/>
         dest: “{{ java_home }}”<br/>
         extra_opts: [–strip-components=1]<br/>
