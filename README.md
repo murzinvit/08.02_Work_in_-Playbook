@@ -51,3 +51,4 @@ name: Install Java<br/>
         tags: elastic # можно отдельно вызывать таску по этому тегу<br/>
         name: Create directrory for Elasticsearch<br/>
         file: # создание папки<br/>
+        etc
