@@ -1,3 +1,5 @@
+Прокоментировал строки в playbook с пояснениями что выполняет каждая строка. Readme.md открываю в IntellijIDEA.
+
 name: Install Java
     hosts: all # где исполнять playbook, для группы all
     tasks: # Что исполнять для группы all
