@@ -1,4 +1,4 @@
-Прокоментировал строки в playbook с пояснениями что выполняет каждая строка. Readme.md открываю в IntellijIDEA.
+Прокоментировал строки в playbook с пояснениями что выполняет каждая строка. Проверил в docker, playbook работает. После выполнения надо зайти по docker exec в контейнер и стартануть /etc/init.d/kibana start. Kibana доступна на порту 5601.
 
 name: Install Java<br/>
     hosts: all # где исполнять playbook, для группы all<br/>
