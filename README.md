@@ -15,37 +15,37 @@ name: Install Java
         until: download_java_binaries is succeeded #3 попытки записи в dest
         tags: java
         name: Ensure installation dir exists
-        become: true # выполнение таски с root правами
-        file: # создание папки с путём что емеется в java_home
-        state: directory
-        path: “{{ java_home }}”
-        tags: java
-        name: Extract java in the installation directory
-        become: true
-        unarchive: # разорхивация 
+        become: true # выполнение таски с root правами <br/>
+        file: # создание папки с путём что емеется в java_home<br/>
+        state: directory<br/>
+        path: “{{ java_home }}”<br/>
+        tags: java<br/>
+        name: Extract java in the installation directory<br/>
+        become: true<br/>
+        unarchive: # разорхивация <br/>
         copy: false
-        src: “/tmp/jdk-{{ java_jdk_version }}.tar.gz”
-        dest: “{{ java_home }}”
-        extra_opts: [–strip-components=1]
-        creates: “{{ java_home }}/bin/java” 
-        tags:java
-        name: Export environment variables
-        become: true
-        template: # копирование из j2 файла в dest
-        src: jdk.sh.j2
-        dest: /etc/profile.d/jdk.sh
-        tags: java
-    name: Install Elasticsearch 
-    hosts: elasticsearch # выполнение для группы elasticsearch
-    tasks:
-        name: Upload tar.gz Elasticsearch from remote URL
-        get_url: # загрузка по uRL
-        url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz
-        dest: /tmp/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz
-        mode: 0755 # установка разрешений на скачанный файл
-        timeout: 60 #время для загрузки
-        force: true
-        validate_certs: false # не проверять сертификат при скачевании
-        register: get_elastic # переменная с результатом работы таски
-        until: get_elastic is succeeded # 3 попытки загрузки
-        tags: elastic # можно отдельно вызывать таску по этому тегу
+        src: “/tmp/jdk-{{ java_jdk_version }}.tar.gz”<br/>
+        dest: “{{ java_home }}”<br/>
+        extra_opts: [–strip-components=1]<br/>
+        creates: “{{ java_home }}/bin/java” <br/>
+        tags:java<br/>
+        name: Export environment variables<br/>
+        become: true<br/>
+        template: # копирование из j2 файла в dest<br/>
+        src: jdk.sh.j2<br/>
+        dest: /etc/profile.d/jdk.sh<br/>
+        tags: java<br/>
+    name: Install Elasticsearch <br/>
+    hosts: elasticsearch # выполнение для группы elasticsearch<br/>
+    tasks:<br/>
+        name: Upload tar.gz Elasticsearch from remote URL<br/>
+        get_url: # загрузка по uRL<br/>
+        url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz<br/>
+        dest: /tmp/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz<br/>
+        mode: 0755 # установка разрешений на скачанный файл<br/>
+        timeout: 60 #время для загрузки<br/>
+        force: true<br/>
+        validate_certs: false # не проверять сертификат при скачевании<br/>
+        register: get_elastic # переменная с результатом работы таски<br/>
+        until: get_elastic is succeeded # 3 попытки загрузки<br/>
+        tags: elastic # можно отдельно вызывать таску по этому тегу<br/>
