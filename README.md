@@ -46,7 +46,7 @@
 `mode: 0755` # установка разрешений на скачанный файл</br>
 `timeout: 60` #время для загрузки</br>
 `force: true`</br>
-`validate_certs: false` # не проверять сертификат при скачевании</br>
+`validate_certs: false` # не проверять сертификат при скачивании</br>
 `register: get_elastic` # переменная с результатом работы таски</br>
 `until: get_elastic is succeeded` # 3 попытки загрузки</br>
 `tags: elastic` # можно отдельно вызывать таску по этому тегу</br>
