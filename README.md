@@ -24,7 +24,7 @@
 `name: Extract java in the installation directory`</br>
 `become: true`</br>
 `unarchive:` # разорхивация</br>
-`copy: false`</br> # Искать архив на управляемой машине
+`copy: false` # Искать архив на управляемой машине</br>
 `src: “/tmp/jdk-{{ java_jdk_version }}.tar.gz”` # источник</br>
 `dest: “{{ java_home }}”` # путь куда разорхивируем </br>
 `extra_opts: [–strip-components=1]` # Разархивировать файлы без папки архива</br>
