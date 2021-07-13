@@ -24,17 +24,17 @@
 `name: Extract java in the installation directory`</br>
 `become: true`</br>
 `unarchive:` # разорхивация</br>
-`copy: false`</br>
-`src: “/tmp/jdk-{{ java_jdk_version }}.tar.gz”` # путь кда разорхивируем</br>
-`dest: “{{ java_home }}”`</br>
-`extra_opts: [–strip-components=1]`</br>
+`copy: false`</br> # Искать архив на управляемой машине
+`src: “/tmp/jdk-{{ java_jdk_version }}.tar.gz”` # источник</br>
+`dest: “{{ java_home }}”` # путь куда разорхивируем </br>
+`extra_opts: [–strip-components=1]` # Разархивировать файлы без папки архива</br>
 `creates: “{{ java_home }}/bin/java”`</br>
 `tags:java`</br>
 `name: Export environment variables`</br>
-`become: true`</br>
+`become: true` # С правами root</br> 
 `template:` # копирование из j2 файла в dest</br>
-`src: jdk.sh.j2`</br>
-`dest: /etc/profile.d/jdk.sh`</br>
+`src: jdk.sh.j2` #Имя источника jinja</br>
+`dest: /etc/profile.d/jdk.sh`#Место назначение</br>
 `tags: java`</br>
 `name: Install Elasticsearch`</br>
 `hosts: elasticsearch `# выполнение для группы elasticsearch</br>
